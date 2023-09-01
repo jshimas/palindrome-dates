@@ -1,45 +1,30 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
         int startYear = 2010;
         int endYear = 2015;
 
-        List<String> palindromeDates = findPalindromeDates(startYear, endYear);
-
-        if (!palindromeDates.isEmpty()) {
-            System.out.println("Palindrome dates between " + startYear + " and " + endYear + ":");
-            for (String date : palindromeDates) {
-                System.out.println(date);
-            }
-        } else {
-            System.out.println("No palindrome dates found between " + startYear + " and " + endYear);
-        }
+        printBonusDatesBetween(startYear, endYear);
     }
 
-    public static List<String> findPalindromeDates(int startYear, int endYear) throws ParseException {
-        List<String> palindromeDates = new ArrayList<>();
+    public static void printBonusDatesBetween(int fromYear, int toYear) throws ParseException {
         SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyyMMdd");
         SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        for (int year = startYear; year <= endYear; year++) {
+        for (int year = fromYear; year <= toYear; year++) {
             for (int month = 1; month <= 12; month++) {
                 int maxDay = getDaysCountOfMonth(month, year);
                 for (int day = 1; day <= maxDay; day++) {
                     String dateStr = String.format("%04d%02d%02d", year, month, day);
 
                     if (isPalindrome(dateStr)) {
-                        String formattedDate = outputDateFormat.format(inputDateFormat.parse(dateStr));
-                        palindromeDates.add(formattedDate);
+                        System.out.println(outputDateFormat.format(inputDateFormat.parse(dateStr)));
                     }
                 }
             }
         }
-
-        return palindromeDates;
     }
 
     public static boolean isPalindrome(String str) {
